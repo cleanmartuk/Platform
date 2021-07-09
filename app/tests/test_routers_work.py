@@ -22,7 +22,7 @@ def test_routes_read_item():
     "name": "Portal Gun"
   }
 }
-    
+
 def test_routes_read_item_err_token():
     response = client.get("/works/?token=jesa", headers={"X-Token": "fake-super-secret-token"})
     assert response.status_code == 400

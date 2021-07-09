@@ -8,7 +8,7 @@ client = TestClient(app)
 # ************************************
 # ******** Clients  Tests ************
 # ************************************
- 
+
 def test_routes_read_clients():
     response = client.get("/clients/?token=jessica", headers={"X-Token": "fake-super-secret-token"})
     assert response.status_code == 200

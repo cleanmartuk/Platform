@@ -18,12 +18,12 @@ def test_routes_read_jobs():
                 "assigned" : False,
                 "client_id" : 'client_guid',
                 "date_required" : "01/01/22",
-                "date_required" : "13:45",
+                "time_required" : "13:45",
                 "assigned_to" : "",
                 "assigned_on" : "",
                 "worksheet" : "",
                 },
-               "":{
+               "7f644301-e3f1-4752-90d5-99fbfad99xx9":{
                 "id": "7f644301-e3f1-4752-90d5-99fbfad99xx9",
                 "active" : True,
                 "assigned" : True,

@@ -1,12 +1,13 @@
+""" Job Route. """
+
 from fastapi import APIRouter, Depends, HTTPException
-from datetime import datetime
-from typing import List, Optional
+from typing import List, 
 from pydantic import BaseModel
-import logging, json
 
 from ..dependencies import get_token_header
 
 class Job(BaseModel):
+    """ DocString for Job pydantic class schema """
     id : str
     active : bool
     assigned : bool
@@ -18,6 +19,7 @@ class Job(BaseModel):
     assignedOn: str
     worksheet: str
     class Config:
+        """ DocString for Job class schema """
         schema_extra = {
             "example": {
                 "id": "7f644301-e3f1-4752-90d5-99fbfad95uh8",
@@ -25,7 +27,7 @@ class Job(BaseModel):
                 "assigned" : False,
                 "client_id" : 'client_guid',
                 "date_required" : "01/01/22",
-                "date_required" : "13:45",
+                "time_required" : "13:45",
                 "assigned_to" : "",
                 "assigned_on" : "",
                 "worksheet" : "",
@@ -40,10 +42,10 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-def find_job(id):
-    if id not in fake_job_db:
+def find_job(ref):
+    if ref not in fake_job_db:
         raise HTTPException(status_code=404, detail="Customers not found")
-    return {"result": fake_job_db[id]}
+    return {"result": fake_job_db[ref]}
 
 
 fake_job_db = {"7f644301-e3f1-4752-90d5-99fbfad95uh8": {
@@ -70,7 +72,7 @@ fake_job_db = {"7f644301-e3f1-4752-90d5-99fbfad95uh8": {
                }}
 
 @router.get("/")
-async def read_jobs():
+async def get_jobs():
     return fake_job_db
 
 

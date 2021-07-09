@@ -1,14 +1,16 @@
+""" Client Route. """
+
+import json
 from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 from pydantic import BaseModel
-import logging, json
 
 from ..dependencies import get_token_header
 
 
-
 class Client(BaseModel):
+    """ DocString for Client pydantic class schema """
     id : str
     status : bool
     name : str
@@ -17,6 +19,7 @@ class Client(BaseModel):
     password : str
     JobSheet: List[ str ] = []
     class Config:
+        """ DocString for Client class schema """
         schema_extra = {
             "example": {
                 "id": "7f644301-e3f1-4752-90d5-99fbfad91ab3",
@@ -30,7 +33,6 @@ class Client(BaseModel):
         }
 
 
-
 router = APIRouter(
     prefix="/clients",
     tags=["clients"],
@@ -38,10 +40,10 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-def find_client(id):
-    if id not in fake_clients_db:
+def find_client(ref):
+    if ref not in fake_clients_db:
         raise HTTPException(status_code=404, detail="Customers not found")
-    return {"result": fake_clients_db[id]}
+    return {"result": fake_clients_db[ref]}
 
 
 fake_clients_db = {"7f644301-e3f1-4752-90d5-99fbfad91ab3": {
@@ -66,7 +68,7 @@ fake_clients_db = {"7f644301-e3f1-4752-90d5-99fbfad91ab3": {
 
 
 @router.get("/")
-async def read_clients():
+async def get_clients():
     return fake_clients_db
 
 @router.post("/register/")

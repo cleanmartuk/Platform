@@ -1,13 +1,15 @@
+""" Customer Route. """
+
 from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
-import logging, json
 
 from ..dependencies import get_token_header
 
 
 class Customer(BaseModel):
+    """ DocString for Customer pydantic class schema """
     id: str
     status : bool
     title : str
@@ -19,6 +21,7 @@ class Customer(BaseModel):
     WorkingDays: List[ str ] = []
     services: List[ str ] = []
     class Config:
+        """ DocString for Customer class schema """
         schema_extra = {
             "example": {
                 "id": "9g644301-e3f1-4752-90d5-99fbfad99xy4",
@@ -43,10 +46,10 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-def find_customer(id):
-    if id not in fake_customers_db:
+def find_customer(ref):
+    if ref not in fake_customers_db:
         raise HTTPException(status_code=404, detail="Customer not found")
-    return {"result": fake_customers_db[id]}
+    return {"result": fake_customers_db[ref]}
 
 
 fake_customers_db = { "9g644301-e3f1-4752-90d5-99fbfad99xy4": {
@@ -71,13 +74,12 @@ fake_customers_db = { "9g644301-e3f1-4752-90d5-99fbfad99xy4": {
                 "signup_ts": None,
                 "AreasCovered":["DT1", "DT2", "DT3", "DT4", "DT5", "DT6", "DT7", "DT8"],
                 "WorkingDays":[1,2,3,4,5],
-                "services": [1,2,5],
-            }    
-     }
+                "services": [1,2,5]
+            }}
 
 
 @router.get("/")
-async def read_customers():
+async def get_customers():
     return fake_customers_db
 
 
