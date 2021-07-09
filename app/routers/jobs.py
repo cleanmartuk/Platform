@@ -1,7 +1,7 @@
 """ Job Route. """
 
 from fastapi import APIRouter, Depends, HTTPException
-from typing import List, 
+from typing import List
 from pydantic import BaseModel
 
 from ..dependencies import get_token_header
@@ -54,18 +54,18 @@ fake_job_db = {"7f644301-e3f1-4752-90d5-99fbfad95uh8": {
                 "assigned" : False,
                 "client_id" : 'client_guid',
                 "date_required" : "01/01/22",
-                "date_required" : "13:45",
+                "time_required" : "13:45",
                 "assigned_to" : "",
                 "assigned_on" : "",
                 "worksheet" : "",
                 },
-               "":{
+               "7f644301-e3f1-4752-90d5-99fbfad99xx9":{
                 "id": "7f644301-e3f1-4752-90d5-99fbfad99xx9",
                 "active" : True,
                 "assigned" : True,
                 "client_id" : 'client_guid',
                 "date_required" : "01/01/22",
-                "date_required" : "13:45",
+                "time_required" : "13:45",
                 "assigned_to" : "customer_guid",
                 "assigned_on" : "10/10/21",
                 "worksheet" : "7f644301-e3f1-4752-90d5-99fbabc12xx3",

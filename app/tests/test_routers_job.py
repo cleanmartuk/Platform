@@ -29,7 +29,7 @@ def test_routes_read_jobs():
                 "assigned" : True,
                 "client_id" : 'client_guid',
                 "date_required" : "01/01/22",
-                "date_required" : "13:45",
+                "time_required" : "13:45",
                 "assigned_to" : "customer_guid",
                 "assigned_on" : "10/10/21",
                 "worksheet" : "7f644301-e3f1-4752-90d5-99fbabc12xx3",
