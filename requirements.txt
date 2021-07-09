@@ -12,3 +12,4 @@ uvloop==0.12.2
 websockets==7.0
 pytest
 neo4j
+python-dotenv

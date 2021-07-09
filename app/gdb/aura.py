@@ -1,6 +1,10 @@
 from neo4j import GraphDatabase
 import logging
 from neo4j.exceptions import ServiceUnavailable
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class App:
 
@@ -60,7 +64,9 @@ if __name__ == "__main__":
     # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
     uri = "neo4j+ssc://aa91f78d.databases.neo4j.io"
     user = "neo4j"
-    password = "YPXqooegeHF3wfnNtEb37ndCEzewH8fqVexlwtpWDPQ"
+    pword = os.getenv('neo4j_pword')
+    print (f"pword = {pword}")
+    password = pword
     app = App(uri, user, password)
     app.create_friendship("Alice", "David")
     app.find_person("Alice")
