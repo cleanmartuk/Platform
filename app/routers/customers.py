@@ -9,8 +9,7 @@ from ..dependencies import get_token_header
 
 
 class Customer(BaseModel):
-
-    """DocString for Customer pydantic class schema"""
+    """DocString for Customer pydantic class schema."""
     id: str
     status : bool
     title : str
@@ -22,8 +21,7 @@ class Customer(BaseModel):
     WorkingDays: List[ str ] = []
     services: List[ str ] = []
     class Config:
-
-        """DocString for Customer class schema"""
+        """DocString for Customer class schema."""
         schema_extra = {
             "example": {
                 "id": "9g644301-e3f1-4752-90d5-99fbfad99xy4",
