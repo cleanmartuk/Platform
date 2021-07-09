@@ -1,8 +1,6 @@
 """ Client Route. """
 
-import json
 from fastapi import APIRouter, Depends, HTTPException
-from datetime import datetime
 from typing import List
 from pydantic import BaseModel
 

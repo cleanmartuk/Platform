@@ -1,9 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
-from neo4j import GraphDatabase
-import json, logging
-from neo4j.exceptions import ServiceUnavailable
+import json
 from py2neo import Graph
 
 
@@ -18,7 +16,7 @@ class User(BaseModel):
     password = str
     signup_ts: Optional[datetime] = None
     JobSheet: List[ str ] = []
-    
+
 external_data = {
     "id": "7f644301-e3f1-4752-90d5-99fbfad91ab4",
     "status": True,
@@ -29,12 +27,6 @@ external_data = {
     "signup_ts": None,
     "JobSheet": ["79dc3d3a-c40b-47e8-8cf4-207c2de7e36","c85a5633-2803-4826-ae5a-82474c238d5","0348ae36-202a-4bfc-a92d-849607fd541" ]
 }
-
-
-# user = User(**external_data)
-
-# print (f"user.id : {user.id}")
-# print (f"user.JobSheet : {user.JobSheet}")
 
 def magic_cypher():
     # # Add uniqueness constraints.
@@ -64,8 +56,7 @@ def magic_cypher():
     graph.run(query,json=data)
     
 def register_client(client):
-    print(f"Start registration")
-    print(f"CLIENT : {client}")
+    print(f"Start registration for CLIENT : {client}")
     query = """
     WITH $json as data
     UNWIND data as q
@@ -75,9 +66,9 @@ def register_client(client):
     client.location = q.location, client.JobSheet = q.JobSheet, client.password = q.password
     """
     
-    print(f"Start graph execution")
+    print(f"Start graph execution for client {client}")
     graph.run(query,json=client)
-    print(f"Complete graph execution")
+    print(f"Complete graph execution for client {client}")
     
     
 register_client(external_data)

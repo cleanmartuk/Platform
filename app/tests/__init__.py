@@ -1,1 +1,2 @@
-"""App root directory."""
+"""App root directory.
+"""
