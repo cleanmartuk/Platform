@@ -13,3 +13,4 @@ websockets==7.0
 pytest
 neo4j
 python-dotenv
+coverage
