@@ -1,3 +1,2 @@
 #!/usr/bin/env python3
-""" [Work Sheet Data Management]
-"""
+"""[Work Sheet Data Management]"""
