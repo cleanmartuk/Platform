@@ -47,6 +47,3 @@ def test_routes_read_customers_err_header():
     response = client.get("/customers/?token=jessica", headers={"X-Token": "fake-secret-token"})
     assert response.status_code == 400
     assert response.json() == {'detail': 'X-Token header invalid'}
-   
- 
-    
