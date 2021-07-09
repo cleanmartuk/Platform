@@ -54,7 +54,7 @@ def magic_cypher():
 
     """
     graph.run(query,json=data)
-    
+
 def register_client(client):
     print(f"Start registration for CLIENT : {client}")
     query = """

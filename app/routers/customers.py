@@ -1,4 +1,4 @@
-""" Customer Route. """
+"""Customer Route."""
 
 from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
@@ -9,7 +9,7 @@ from ..dependencies import get_token_header
 
 
 class Customer(BaseModel):
-    
+
     """DocString for Customer pydantic class schema"""
     id: str
     status : bool
@@ -22,7 +22,7 @@ class Customer(BaseModel):
     WorkingDays: List[ str ] = []
     services: List[ str ] = []
     class Config:
-        
+
         """DocString for Customer class schema"""
         schema_extra = {
             "example": {

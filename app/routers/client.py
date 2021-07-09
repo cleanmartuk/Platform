@@ -1,4 +1,4 @@
-""" Client Route. """
+"""Client Route."""
 
 from fastapi import APIRouter, Depends, HTTPException
 from typing import List
@@ -8,7 +8,7 @@ from ..dependencies import get_token_header
 
 
 class Client(BaseModel):
-    """ DocString for Client pydantic class schema """
+    """DocString for Client pydantic class schema"""
     id : str
     status : bool
     name : str
@@ -17,7 +17,7 @@ class Client(BaseModel):
     password : str
     JobSheet: List[ str ] = []
     class Config:
-        """ DocString for Client class schema """
+        """DocString for Client class schema"""
         schema_extra = {
             "example": {
                 "id": "7f644301-e3f1-4752-90d5-99fbfad91ab3",

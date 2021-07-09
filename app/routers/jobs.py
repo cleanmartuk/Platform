@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from ..dependencies import get_token_header
 
 class Job(BaseModel):
+
     """DocString for Job pydantic class schema"""
     id : str
     active : bool
@@ -19,6 +20,7 @@ class Job(BaseModel):
     assignedOn: str
     worksheet: str
     class Config:
+
         """DocString for Job class schema"""
         schema_extra = {
             "example": {

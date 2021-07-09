@@ -27,7 +27,7 @@ def test_routes_read_item_err_token():
     response = client.get("/works/?token=jesa", headers={"X-Token": "fake-super-secret-token"})
     assert response.status_code == 400
     assert response.json() == {'detail': 'No Jessica token provided'}
- 
+
 def test_routes_read_item_err_header():
     response = client.get("/works/?token=jessica", headers={"X-Token": "fake-secret-token"})
     assert response.status_code == 400
