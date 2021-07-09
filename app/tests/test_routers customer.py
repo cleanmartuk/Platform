@@ -35,15 +35,14 @@ def test_routes_read_customers():
                 "AreasCovered":["DT1", "DT2", "DT3", "DT4", "DT5", "DT6", "DT7", "DT8"],
                 "WorkingDays":[1,2,3,4,5],
                 "services": [1,2,5],
-            }    
+            }
      }
-
 
 def test_routes_read_customers_err_token():
     response = client.get("/customers/?token=jess", headers={"X-Token": "fake-super-secret-token"})
     assert response.status_code == 400
     assert response.json() == {'detail': 'No Jessica token provided'}
-    
+
 def test_routes_read_customers_err_header():
     response = client.get("/customers/?token=jessica", headers={"X-Token": "fake-secret-token"})
     assert response.status_code == 400

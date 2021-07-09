@@ -48,10 +48,9 @@ def magic_cypher():
     FOREACH (name IN q.loc.specialisms | MERGE (tag:specialism {name:name.name})  MERGE (location)-[:Specilises_In]->(tag)) 
     FOREACH (a IN q.loc.reports | MERGE (location)<-[:REPORTS]-(answer:REPORT {id:a.linkId}) ON CREATE SET answer.reportDate = a.reportDate, answer.reportUri= a.reportUri, answer.firstVisitDate = a.firstVisitDate)
 
-    FOREACH (serviceType IN q.loc.gacServiceTypes | 
-     MERGE (gacServiceType:gacServiceTypes {name:serviceType.name}) 
-     MERGE (location)-[:Supplies_gacServiceType]->(gacServiceType) ) 
-
+    FOREACH (serviceType IN q.loc.gacServiceTypes |
+     MERGE (gacServiceType:gacServiceTypes {name:serviceType.name})
+     MERGE (location)-[:Supplies_gacServiceType]->(gacServiceType) )
     """
     graph.run(query,json=data)
 
@@ -65,10 +64,10 @@ def register_client(client):
     SET client.name = q.name, client.status = q.status, client.houseNumber = q.houseNumber, 
     client.location = q.location, client.JobSheet = q.JobSheet, client.password = q.password
     """
-    
+
     print(f"Start graph execution for client {client}")
     graph.run(query,json=client)
     print(f"Complete graph execution for client {client}")
-    
-    
+
+
 register_client(external_data)
