@@ -1,8 +1,13 @@
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*__pycache__/
+.internal/__pycache__/
+*/__pycache__/
 *.py[cod]
 *$py.class
+.pyc
+*.pyc
 
 # C extensions
 *.so
@@ -137,3 +142,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+.env
+.DS_store
