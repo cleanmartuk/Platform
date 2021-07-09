@@ -18,6 +18,7 @@ class Job(BaseModel):
     assignedOn: str
     worksheet: str
     class Config:
+        '''Docstring here.'''
         schema_extra = {
             "example": {
                 "id": "7f644301-e3f1-4752-90d5-99fbfad95uh8",

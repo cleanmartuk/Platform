@@ -16,6 +16,7 @@ class Client(BaseModel):
     password : str
     JobSheet: List[ str ] = []
     class Config:
+        '''Docstring here.'''
         schema_extra = {
             "example": {
                 "id": "7f644301-e3f1-4752-90d5-99fbfad91ab3",
