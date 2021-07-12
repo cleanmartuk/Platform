@@ -12,3 +12,4 @@ pytest
 neo4j
 python-dotenv
 coverage
+locustio
