@@ -8,7 +8,6 @@ idna==2.8
 pydantic==1.8.2
 starlette==0.14.2
 uvicorn==0.14.0
-uvloop==0.12.2
 websockets==7.0
 pytest
 neo4j
