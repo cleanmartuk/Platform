@@ -1,8 +1,10 @@
 """Client Route."""
-
+# from .gdb.data_models.client import 
 from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 from pydantic import BaseModel
+import uuid
+import time
 
 from ..dependencies import get_token_header
 
@@ -70,6 +72,7 @@ async def get_clients():
 
 @router.post("/register/")
 async def register_client(data: Client ):
+    
     return {"name": data.name, "clients_id": data.id, "location": data.location}
 
 
@@ -92,7 +95,3 @@ async def update_clients(clients_id: str):
             status_code=403, detail="You can only update the item: plumbus"
         )
     return {"clients_id": clients_id, "name": "The great Plumbus"}
-
-
-def create_client(client: Client):
-    pass
