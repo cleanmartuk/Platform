@@ -1,10 +1,19 @@
-import time, uuid
+import time, uuid, logging
 from typing import List, Optional
 from pydantic import BaseModel
-import json
+from neo4j import GraphDatabase
+from neo4j.exceptions import ServiceUnavailable
 from py2neo import Graph
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
+gdbUri = os.getenv('neo4j_gdbUri')
+gdbUser = os.getenv('neo4j_gdbUser')
+gdbPword = os.getenv('neo4j_gdbPword')
 
+print (f"gdbUri = {gdbUri}, gdbUser = {gdbUser}, gdbPword = {gdbPword}")
+auraDriver = GraphDatabase.driver(gdbUri, auth=(gdbUser, gdbPword))
 graph = Graph("bolt://localhost:7687")
 
 
@@ -34,7 +43,7 @@ external_data = {
     "id": "7f644301-e3f1-4752-90d5-99fbfad91ab4",
     "status": True,
     "name" : 'John Doe',
-    "houseNumbber" : 23,
+    "houseNumber" : 23,
     "location" : "DT1 1SS",
     "password" : "Secret_Pa55w0rd",
     "signup_ts": None,
@@ -46,7 +55,7 @@ faked_data = [{
     "id": "7f644301-e3f1-4752-90d5-99fbfad91ab4",
     "status": True,
     "name" : 'John Doe',
-    "houseNumbber" : 23,
+    "houseNumber" : 23,
     "location" : "DT1 1SS",
     "password" : "Secret_Pa55w0rd",
     "signup_ts": None,
@@ -56,7 +65,7 @@ faked_data = [{
 
 
 def register_client(client):
-    print(f"Start registration for CLIENT : {client}")
+    print(f"Start registration for register_client : {client}")
     query = """
     WITH $json as data
     UNWIND data as q
@@ -72,7 +81,7 @@ def register_client(client):
     print(f"Complete graph execution for client {client}")
     return {"success":"client created successfully"}
 
-register_client(external_data)
+# register_client(external_data)
 
 
 def get_client(ref):
@@ -91,6 +100,44 @@ def get_client(ref):
 client = get_client("7f644301-e3f1-4752-90d5-99fbfad91ab4")
 
 
+def created_client( client_profile):
+    ''' To learn more about the Cypher syntax, see https://neo4j.com/docs/cypher-manual/current/
+        The Reference Card is also a good resource for keywords https://neo4j.com/docs/cypher-refcard/current/
+    '''
+    print(f"Start graph execution for created_client")
+    with auraDriver.session() as session:
+            # Write transactions allow the driver to handle retries and transient errors
+            result = session.write_transaction(_create_and_return_client, client_profile)
+            for row in result:
+                print(f"Created client" )
+    return {"success" : "created_client"}
+
+@staticmethod
+def _create_and_return_client(tx, client_profile):
+    # To learn more about the Cypher syntax, see https://neo4j.com/docs/cypher-manual/current/
+    # The Reference Card is also a good resource for keywords https://neo4j.com/docs/cypher-refcard/current/
+    print(f"Start graph execution for _create_and_return_client")
+    query = """
+    WITH $client_profile as data
+    UNWIND data as q
+
+    MERGE (client:CLIENT {id:q.id}) ON CREATE
+    SET client.name = q.name, client.status = q.status, client.houseNumber = q.houseNumber, 
+    client.location = q.location, client.JobSheet = q.JobSheet, client.password = q.password, 
+    client.signup_ts = q.signup_ts, client.joined = q.joined, client.status = q.status
+    """
+    result = tx.run(query, client_profile=client_profile)
+    try:
+        return [{"p1": row["p1"]["name"], "p2": row["p2"]["name"]}
+                for row in result]
+    # Capture any errors along with the query and data for traceability
+    except ServiceUnavailable as exception:
+        logging.error("{query} raised an error: \n {exception}".format(
+            query=query, exception=exception))
+        raise
+
+
+
 
 def create_client(applicant):
     now = time.time()
@@ -107,13 +154,26 @@ def create_client(applicant):
     client["joined"]= time.ctime(now)
     client["JobSheet"]=[]
     
+    # print(f"Triggering created_client")
+    # created_client(client)
+    # print(f"Triggered created_client")
+    print(f"Triggering register_client")
     register_client(client)
+    print(f"Triggered register_client")
     faked_data.append({id: client})
     return faked_data
 
+# create_client(external_data)
 
-# 
 
-# client = create_client(appl)
-# print(f"New client : {client}\n\n")
-# print(f"New client Listing \n : {faked_data}")
+def retrive_client(ref=0):
+    ref = '7f644301-e3f1-4752-90d5-99fbfad91ab4'
+    print("Triggered retrive_client")
+    reqst = faked_data
+    for clnt in reqst:
+        print(f"clnt = {clnt[ref]}")
+        if clnt[ref] != {}:
+            return clnt[ref]
+        else:
+            return f"{ref} was notfound"
+            

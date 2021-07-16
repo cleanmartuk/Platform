@@ -122,3 +122,15 @@ def create_customer(applicant):
     
     faked_data.append({id: customer})
     return faked_data
+
+def retrive_customer(ref=0):
+    ref = '7f644301-e3f1-4752-90d5-99fbfad91ab4'
+    print("Triggered retrive_customer")
+    reqst = faked_data
+    for cstmr in reqst:
+        print(f"cstmr = {cstmr[ref]}")
+        if cstmr[ref] != {}:
+            return cstmr[ref]
+        else:
+            return f"{ref} was notfound"
+            
