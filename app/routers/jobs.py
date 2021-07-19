@@ -83,3 +83,5 @@ async def rregister_jobs(job: Job):
 @router.get("/jobs/{jobs_id}")
 async def read_jobs(jobs_id: str):
     return {"jobs_id": jobs_id}
+
+
