@@ -8,12 +8,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-gdbUri = os.getenv('neo4j_gdbUri')
-gdbUser = os.getenv('neo4j_gdbUser')
-gdbPword = os.getenv('neo4j_gdbPword')
-
-print (f"gdbUri = {gdbUri}, gdbUser = {gdbUser}, gdbPword = {gdbPword}")
-auraDriver = GraphDatabase.driver(gdbUri, auth=(gdbUser, gdbPword))
 graph = Graph("bolt://localhost:7687")
 
 
@@ -177,3 +171,55 @@ def retrive_client(ref=0):
         else:
             return f"{ref} was notfound"
             
+            
+#  ##
+#  ## AURA GDB ACTIONS
+#  ##           
+# gdbUri = os.getenv('neo4j_gdbUri')
+# gdbUser = os.getenv('neo4j_gdbUser')
+# gdbPword = os.getenv('neo4j_gdbPword')
+
+# print (f"gdbUri = {gdbUri}, gdbUser = {gdbUser}, gdbPword = {gdbPword}")
+# auraDriver = GraphDatabase.driver(gdbUri, auth=(gdbUser, gdbPword))          
+            
+# def create_client_profile(self, client_info):
+#     with self.auraDriver.session() as session:
+#         # Write transactions allow the driver to handle retries and transient errors
+#         result = session.write_transaction(
+#             self._create_and_return_client_profile, client_info)
+#         for row in result:
+#             print("Created client_profile: {p1}".format(p1=row['p1']))
+
+# @staticmethod
+# def _create_and_returnclient_info(tx, client_info):
+#     # To learn more about the Cypher syntax, see https://neo4j.com/docs/cypher-manual/current/
+#     # The Reference Card is also a good resource for keywords https://neo4j.com/docs/cypher-refcard/current/
+#     query = (
+#         "CREATE (p1:CLIENT) set p1 += $person_ref "
+#         "RETURN p1"
+#     )
+#     result = tx.run(query, person_ref=client_info)
+#     try:
+#         return [{"p1": row["p1"]["name"], "p2": row["p2"]["name"]} for row in result]
+#     # Capture any errors along with the query and data for traceability
+#     except ServiceUnavailable as exception:
+#         logging.error("{query} raised an error: \n {exception}".format(
+#             query=query, exception=exception))
+#         raise
+
+# def find_client_profile(self, person_name):
+#     with self.auraDriver.session() as session:
+#         result = session.read_transaction(self._find_and_return_client_profile, client_id)
+#         for row in result:
+#             print("Found person: {row}".format(row=row))
+
+# @staticmethod
+# def _find_and_return_client_profile(tx, client_id):
+#     query = (
+#         "MATCH (p:CLIENT) "
+#         "WHERE p.name = $client_ref "
+#         "RETURN p.name AS name"
+#     )
+#     result = tx.run(query, client_ref=client_id)
+#     return [row["name"] for row in result]
+        

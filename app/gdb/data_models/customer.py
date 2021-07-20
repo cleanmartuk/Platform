@@ -75,23 +75,23 @@ def register_customer(customer):
     WITH $json as data
     UNWIND data as q
 
-    MERGE (customer:customer {id:q.id}) ON CREATE
-    SET customer.name = q.name, customer.status = q.status, customer.houseNumber = q.houseNumber, 
-    customer.location = q.location, customer.JobSheet = q.JobSheet, customer.password = q.password
-    """
+    MERGE (customer:CUSTOMER {id:q.id}) ON CREATE
+    SET customer.title = q.title, customer.status = q.status, customer.CompanyReg = q.CompanyReg, 
+    customer.RegisteredAddress = q.RegisteredAddress, customer.password = q.password, customer.joined = q.joined
+  """
 
     print(f"Start graph execution for customer {customer}")
     graph.run(query,json=customer)
     print(f"Complete graph execution for customer {customer}")
 
-register_customer(external_data)
+# register_customer(external_data)
 
 
 def get_customer(ref):
     '''To retrieve the profile of a customer by id.'''
     print(f"Start retrieval of customer: {ref}")
     query = """
-    match (customer:customer) where customer.id = $ref return customer as clt
+    match (customer:CUSTOMER) where customer.id = $ref return customer as clt
     """
 
     print(f"Start graph execution for retrieving customer {ref}")
@@ -120,6 +120,7 @@ def create_customer(applicant):
     customer["WorkingDays"]=applicant["WorkingDays"],
     customer["services"]= applicant["services"]
     
+    register_customer(customer)
     faked_data.append({id: customer})
     return faked_data
 

@@ -64,9 +64,13 @@ class App:
 
 if __name__ == "__main__":
     # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
-    uri = "neo4j+ssc://aa91f78d.databases.neo4j.io"
-    user = "neo4j"
-    pword = os.getenv('neo4j_pword')
+    # uri = "neo4j+ssc://aa91f78d.databases.neo4j.io"
+    # user = "neo4j"
+    uri = os.getenv('neo4j_gdbUri')
+    print (f"pword = {uri}")
+    user = os.getenv('neo4j_gdbUser')
+    print (f"pword = {user}")
+    pword = os.getenv('neo4j_gdbPword')
     print (f"pword = {pword}")
     password = pword
     app = App(uri, user, password)
