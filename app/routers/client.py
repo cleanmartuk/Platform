@@ -6,6 +6,8 @@ from pydantic import BaseModel
 import uuid
 import time
 
+from ..gdb.data_models import client
+
 from ..dependencies import get_token_header
 
 
@@ -68,7 +70,8 @@ fake_clients_db = {"7f644301-e3f1-4752-90d5-99fbfad91ab3": {
 
 @router.get("/")
 async def get_clients():
-    return fake_clients_db
+    resp = client.retrive_clients()
+    return resp
 
 @router.post("/register/")
 async def register_client(data: Client ):

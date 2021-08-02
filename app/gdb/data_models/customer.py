@@ -11,34 +11,7 @@ from py2neo import Graph
 graph = Graph("bolt://localhost:7687")
 
 
-class Customer(BaseModel):
-    id: str
-    status : bool
-    title : str
-    CompanyReg : int
-    RegisteredAddress : str
-    password : str
-    signup_ts: float
-    AreasCovered: List[ str ] = []
-    WorkingDays: List[ str ] = []
-    services: List[ str ] = []
-    class Config:
-        '''Docstring here.'''
-        schema_extra = {
-            "example": {
-                "id": "9g644301-e3f1-4752-90d5-99fbfad99xy4",
-                "status" : True,
-                "title" : 'Any Clean',
-                "CompanyReg" : 7999999,
-                "RegisteredAddress" : "1 Main Street, Anytown, Anycounty, Anyland, XX9 9XX",
-                "password" : "Secret_Pa55w0rd",
-                "signup_ts": None,
-                "AreasCovered":["DT1", "DT2"],
-                "WorkingDays":[1,2,3,4,5,6],
-                "services": [1,3,4],
-            }}
-
-
+ 
 external_data = {
                 "id": "7f644301-e3f1-4752-90d5-99fbfad91ab4",
                 "status" : True,
