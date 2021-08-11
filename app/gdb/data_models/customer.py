@@ -8,7 +8,9 @@ import json
 from py2neo import Graph
 
 
-graph = Graph("bolt://localhost:7687")
+from app.gdb.helper.graph import get_gdb
+
+gdbservice = get_gdb('prod')
 
 
  
@@ -54,7 +56,7 @@ def register_customer(customer):
   """
 
     print(f"Start graph execution for customer {customer}")
-    graph.run(query,json=customer)
+    gdbservice.run(query,json=customer)
     print(f"Complete graph execution for customer {customer}")
 
 # register_customer(external_data)
@@ -68,7 +70,7 @@ def get_customer(ref):
     """
 
     print(f"Start graph execution for retrieving customer {ref}")
-    result = graph.run(query,ref=ref)
+    result = gdbservice.run(query,ref=ref)
     print(f"Complete graph execution for customer {ref}")
     # elem = result.single()
     # print(f"result: Name = {elem['clt']['name']},\n ID = {elem['clt']['id']}")

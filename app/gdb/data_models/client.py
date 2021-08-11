@@ -8,7 +8,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-graph = Graph("bolt://localhost:7687")
+from app.gdb.helper.graph import get_gdb
+
+gdbservice = get_gdb('prod')
 
 
 class Client(BaseModel):
@@ -71,7 +73,7 @@ def register_client(client):
     """
 
     print(f"Start graph execution for client {client}")
-    graph.run(query,json=client)
+    gdbservice.run(query,json=client)
     print(f"Complete graph execution for client {client}")
     return {"success":"client created successfully"}
 
@@ -86,7 +88,7 @@ def get_client(ref):
     """
 
     print(f"Start graph execution for retrieving client {ref}")
-    result = graph.run(query,ref=ref)
+    result = gdbservice.run(query,ref=ref)
     print(f"Complete graph execution for client {ref}")
     # elem = result.single()
     # print(f"result: Name = {elem['clt']['name']},\n ID = {elem['clt']['id']}")
