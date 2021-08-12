@@ -1,6 +1,8 @@
 import foo
 
 print("before Bar Foo functionA")
-foo.functionA()
+resp = foo.functionA()
+print (resp)
 print("before Bar Foo functionB")
-foo.functionB()
+resp = foo.functionB()
+print (resp)
