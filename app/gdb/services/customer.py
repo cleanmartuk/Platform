@@ -92,6 +92,19 @@ def update_database(customer_profile: Customer):
     print(f"Complete graph execution for customer {customer_profile}")
     return {"success":"customer created successfully", "query":query}
 
+def get_all_customers():
+    print("Start retrieval of ALL CUSTOMERS:")
+    query = """
+    match (customer:CUSTOMER) return customer as clt
+    """
+    resp = dumps(gdbservice.run(query).data())
+    print(f"resp {resp}")
+    result = loads(resp)
+    print(f"result {result}")
+    data = result[0]['clt']
+    print(f"data {data}")
+    print(f"result of graph execution for job {result}")
+    return {"profile":data, "query":query}
 
 
 def get_customer_profile(customer_id):
@@ -107,8 +120,11 @@ def get_customer_profile(customer_id):
     print(f"result {result}")
     data = result[0]['clt']
     print(f"data {data}")
-    # print(f"Complete graph execution for customer {customer_id}")
-    # print(f"result of graph execution for customer {result}")
+    print(f"Complete graph execution for customer {customer_id}")
+    print(f"result of graph execution for customer {result}")
     return {"profile":data, "query":query}
 
 
+
+if __name__ == '__main__':
+    pass

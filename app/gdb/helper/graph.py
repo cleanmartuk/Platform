@@ -21,7 +21,7 @@ def get_gdb(env='test'):
     return gdbservice
 
 
-def clean_aura():
+def clean_aura(gdbservice):
     '''Clean the Aura GDB to allow the unit tests to pass.'''
     print(f"Clear down Aura GDB graph for test execution")
     query = """
@@ -30,8 +30,8 @@ def clean_aura():
         match (cu :CUSTOMER) where cu.id <> "64703c74-4663-4e97-9038-7b74754555eb" 
         delete cl,jb,b,cu
     """
-    graph = get_gdb('prod')
-    graph.run(query)
+    # gdbservice = get_gdb('prod')
+    gdbservice.run(query)
     print(f"AURA Graph: ready for test execution.")
     
     

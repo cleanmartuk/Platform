@@ -3,7 +3,6 @@ from json import dumps, loads
 from typing import List, Optional
 from pydantic import BaseModel
 from app.gdb.helper.graph import get_gdb
-
 gdbservice = get_gdb('prod')
 
 class Client(BaseModel):
@@ -86,11 +85,28 @@ def update_database(client_profile: Client):
 def update_client(client_id):
     pass
 
+
+def get_all_clients():
+    print("Start retrieval of ALL CLIENT:")
+    query = """
+    match (client:CLIENT) return client as clt
+    """
+    resp = dumps(gdbservice.run(query).data())
+    print(f"resp {resp}")
+    result = loads(resp)
+    print(f"result {result}")
+    data = result[0]['clt']
+    print(f"data {data}")
+    print(f"result of graph execution for job {result}")
+    return {"profile":data, "query":query}
+
 def get_client_profile(client_id):
     print(f"Start retrieval of CLIENT: {client_id}")
     query = """
     match (client:CLIENT) where client.id = $client_id return client as clt
     """
+    # print(f"Start graph execution for retrieving client {client_id}")
+    # print(f"Graph execution with query: {query}")
     resp = dumps(gdbservice.run(query, client_id=client_id).data())
     print(f"resp {resp}")
     result = loads(resp)

@@ -1,14 +1,11 @@
 """Client Route."""
-# from .gdb.data_models.client import 
+
 from fastapi import APIRouter, Depends, HTTPException,Request, Form
 from typing import List
 from pydantic import BaseModel
-import uuid
-import time
-
-from ..gdb.data_models import client
 
 from ..dependencies import get_token_header
+from ..gdb.services import client
 
 
 class Client(BaseModel):
@@ -70,21 +67,19 @@ fake_clients_db = {"7f644301-e3f1-4752-90d5-99fbfad91ab3": {
 
 @router.get("/")
 async def get_clients():
-    resp = client.retrive_clients()
+    resp = client.get_all_clients()
     return resp
 
 @router.post("/register/")
 async def register_client(data: Client ):
-    
     return {"name": data.name, "clients_id": data.id, "location": data.location}
-
 
 
 @router.get("/{clients_id}")
 async def read_clients(clients_id: str ):
-    client = find_client(clients_id)["result"]
-    print(f"Client : {client}")
-    return {"name": client["name"], "clients_id": client["id"], "location": client["location"]}
+    resp = client.get_client_profile(clients_id)
+    print(f"Client : {resp}")
+    return {clients_id: resp["profile"]}
 
 
 @router.put(
@@ -99,3 +94,6 @@ async def update_clients(clients_id: str):
         )
     return {"clients_id": clients_id, "name": "The great Plumbus"}
 
+
+def create_client(customer: Client):
+    pass

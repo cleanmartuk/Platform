@@ -6,7 +6,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from ..dependencies import get_token_header
-
+from ..gdb.services import customer
 
 class Customer(BaseModel):
     id: str
@@ -76,7 +76,8 @@ fake_customers_db = { "9g644301-e3f1-4752-90d5-99fbfad99xy4": {
 
 @router.get("/")
 async def get_customers():
-    return fake_customers_db
+    resp = customer.get_all_customers()
+    return resp
 
 
 @router.post("/register/")
@@ -86,10 +87,9 @@ async def register_customer(data: Customer ):
 
 @router.get("/{customers_id}")
 async def read_customers(customers_id: str):
-    if customers_id not in fake_customers_db:
-        raise HTTPException(status_code=404, detail="Customers not found")
-    return {"name": fake_customers_db[customers_id]["name"], "customers_id": customers_id}
-
+    resp = customer.get_customer_profile(customers_id)
+    print(f"Client : {resp}")
+    return {customers_id: resp["profile"]}
 
 @router.put(
     "/{customers_id}",
